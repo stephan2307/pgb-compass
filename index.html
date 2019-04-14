@@ -1,27 +1,76 @@
 <!DOCTYPE html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>PhoneGap Compass Test</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="buttons.css" />
+    <style>
+    body {margin:0px;font-size:large;}
+    .hidden {visibility:collapse;display:none;}
+    .expose {visibility:visible;display:block;} /* Here for completeness only. */
+    .copyright {padding:5px;align:left;font-style:italic;font-size:small;}
+    #header {margin:0;padding:0;}
+    #exitApp {margin:0.1em;float:right;}
+    </style>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    
+    <script type="text/javascript">
+    var gWatchID = null;
+    var gOptions = { frequency: 2000 }; // Update every 2 seconds
+    var gOption2 = { filter: 30 };      // degrees required to initiate a watchHeading success callback
+    //
+    // Wait for PhoneGap to load
+    document.addEventListener("deviceready", onDeviceReady, false);
+    //
+    function compassClear() {
+        document.getElementById('heading').innerHTML = '';
+    }
+    function compassUpdate(heading) {
+        document.getElementById('heading').innerHTML = heading.magneticHeading;
+    }
+    function compassOff() {
+        navigator.compass.clearWatch(gWatchID);
+    }
+    //
+    function onDeviceReady() {
+        // hide Exit button. They don't have one on iOS devices.
+        if (device.platform === "iOS") {
+            //alert("got iOS");
+            // hide Exit button. They don't have one on iOS devices.
+            // http://www.mzcart.com/javascript-how-to-addremove-css-class-from-a-dom-element/
+            document.getElementById('exitApp').classList.add("hidden");
+            /* deals with post-iOS-7 change that covers the status bar */
+            /* http://coenraets.org/blog/2013/09/phonegap-and-cordova-with-ios-7/ */
+            document.body.style.marginTop = "20px";
+        } else if (device.platform == 'Android') {
+            // Get rid of 300ms delay
+            document.addEventListener('DOMContentLoaded', function() { FastClick.attach(document.body); }, false);
+        }
+        navigator.compass.getCurrentHeading(compassUpdate, function (compassError) { alert('Compass error: ' + compassError.code); });
+        gWatchID = navigator.compass.watchHeading(compassUpdate,
+                function (compassError) { alert('Compass error: ' + compassError.code); },
+                gOptions);
+    }
+    //
+    function onLoad() {
+        accelClear();
+    }
 
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+    </script>
+</head>
+<body onload="onLoad()">
+<div id=header class="button button-block button-large">
+    <img align=left src=favicon-48x48.png>
+    Compass
+    <button id=exitApp onclick='navigator.app.exitApp()' class="button button-pill button-primary button-large">Exit</button>
+</div>
+<p />&nbsp;<p />
+<button onclick='compassOff()' class="button button-pill button-primary button-large" style="margin:0.1em">Clear Watch</button>
+
+<div id=hd class="button button-block button-pill button-primary button-large" style="margin:1em;">Heading: <span id=heading></span></div>
+
+<div class="copyright" style="padding:5px;align:left;font-style:italic;font-size:small;">
+    <span id=copyright>Created by Jesus Monroy, Jr. &copy; 2015</span>
+</div>
+</body>
 </html>
