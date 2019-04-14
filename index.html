@@ -13,7 +13,7 @@
     #exitApp {margin:0.1em;float:right;}
     </style>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    
+
     <script type="text/javascript">
     var gWatchID = null;
     var gOptions = { frequency: 2000 }; // Update every 2 seconds
@@ -60,17 +60,14 @@
 </head>
 <body onload="onLoad()">
 <div id=header class="button button-block button-large">
-    <img align=left src=favicon-48x48.png>
+
     Compass
-    <button id=exitApp onclick='navigator.app.exitApp()' class="button button-pill button-primary button-large">Exit</button>
+
 </div>
 <p />&nbsp;<p />
 <button onclick='compassOff()' class="button button-pill button-primary button-large" style="margin:0.1em">Clear Watch</button>
 
 <div id=hd class="button button-block button-pill button-primary button-large" style="margin:1em;">Heading: <span id=heading></span></div>
 
-<div class="copyright" style="padding:5px;align:left;font-style:italic;font-size:small;">
-    <span id=copyright>Created by Jesus Monroy, Jr. &copy; 2015</span>
-</div>
 </body>
 </html>
