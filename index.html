@@ -6,18 +6,12 @@
     <link rel="stylesheet" href="buttons.css" />
     <style>
     body {margin:0px;font-size:large;}
-    .hidden {visibility:collapse;display:none;}
-    .expose {visibility:visible;display:block;} /* Here for completeness only. */
-    .copyright {padding:5px;align:left;font-style:italic;font-size:small;}
-    #header {margin:0;padding:0;}
-    #exitApp {margin:0.1em;float:right;}
+
     </style>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
     <script type="text/javascript">
-    var gWatchID = null;
-    var gOptions = { frequency: 2000 }; // Update every 2 seconds
-    var gOption2 = { filter: 30 };      // degrees required to initiate a watchHeading success callback
+    
     //
     // Wait for PhoneGap to load
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -58,16 +52,12 @@
 
     </script>
 </head>
-<body onload="onLoad();" style="height: 100%; background:url('img/rose.png') no-repeat center center fixed; background-size: cover;">
-<div id=header class="button button-block button-large">
+<body onload="onLoad();" style="height: 100%; width: 100%;">
+<div style="height: 100%; width: 100%">
 
-    Compass
+<img src="img/Windrose.svg" />
 
+<!-- <div id=hd class="button button-block button-pill button-primary button-large" style="margin:1em;">Heading: <span id=heading></span></div> -->
 </div>
-
-
-
-<div id=hd class="button button-block button-pill button-primary button-large" style="margin:1em;">Heading: <span id=heading></span></div>
-
 </body>
 </html>
